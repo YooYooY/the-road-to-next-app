@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
+import { LucideKanban } from "lucide-react";
 import { homePath, ticketsPath } from '@/paths'
+import { buttonVariants } from '@/components/ui/button'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,12 +30,13 @@ export default function RootLayout({
             "
         >
           <div>
-            <Link href={homePath()} className="text-lg font-bold">
-              Home
+            <Link href={homePath()}  className={buttonVariants({variant:"ghost"})}>
+              <LucideKanban />
+              <h1 className="ml-2 text-lg font-semibold">TicketBounty</h1>
             </Link>
           </div>
           <div>
-            <Link href={ticketsPath()} className="text-sm font-bold">
+            <Link href={ticketsPath()} className={buttonVariants({variant:"outline"})}>
               Tickets
             </Link>
           </div>
