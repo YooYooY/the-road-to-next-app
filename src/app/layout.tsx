@@ -1,10 +1,6 @@
+import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
-import Link from 'next/link'
-import { LucideKanban } from "lucide-react";
-import { homePath, ticketsPath } from '@/paths'
-import { buttonVariants } from '@/components/ui/button'
 import { Header } from '@/components/header';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 
