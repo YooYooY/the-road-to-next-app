@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import { TicketItem } from '@/features/ticket/components/ticket-item'
 import { getTicket } from '@/features/ticket/queries/get-ticket'
 
@@ -11,7 +12,7 @@ const TicketPage = async ({ params }: TicketPageProps) => {
   const ticket = await getTicket(params.ticketId);
 
   if (!ticket) {
-    return <h2 className="text-lg">Ticket not found</h2>
+    notFound()
   }
 
   return (
