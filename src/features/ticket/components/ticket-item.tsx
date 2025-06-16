@@ -1,3 +1,4 @@
+import { Ticket } from '@prisma/client'
 import { LucideArrowUpRightFromSquare } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -5,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { ticketPath } from '@/paths'
 import { TICKET_ICONS } from '../constants'
-import { Ticket } from '../types'
 
 type TicketItemProps = {
   ticket: Ticket
@@ -20,7 +20,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
       </Link>
     </Button>
   )
-  
+
   return (
     <div
       className={cn('w-full flex gap-x-1', {
