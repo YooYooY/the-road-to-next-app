@@ -30,7 +30,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     >
       <Card className="w-full">
         <CardHeader>
-          <CardTitle className="flex gap-x-2">
+          <CardTitle className="flex gap-x-2 items-center">
             <span>{TICKET_ICONS[ticket.status]}</span>
             <span className="truncate">{ticket.title}</span>
           </CardTitle>
