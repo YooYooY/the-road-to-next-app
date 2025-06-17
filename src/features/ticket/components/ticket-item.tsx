@@ -1,11 +1,12 @@
 import { Ticket } from '@prisma/client'
-import { LucideArrowUpRightFromSquare } from 'lucide-react'
+import { LucideArrowUpRightFromSquare, LucideTrash } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { ticketPath } from '@/paths'
 import { TICKET_ICONS } from '../constants'
+import { TicketDeleteButton } from './ticket-delete-button'
 
 type TicketItemProps = {
   ticket: Ticket
@@ -19,6 +20,17 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         <LucideArrowUpRightFromSquare className="w-4 h-4" />
       </Link>
     </Button>
+  )
+
+  const deleteButton = (
+    <TicketDeleteButton
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideTrash className="h-4 w-4" />
+        </Button>
+      }
+    />
   )
 
   return (
@@ -40,7 +52,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         </CardContent>
       </Card>
 
-      {isDetail ? null : <div className="flex flex-col gap-y-1">{detailButton}</div>}
+      <div className="flex flex-col gap-y-1">{isDetail ? deleteButton : detailButton}</div>
     </div>
   )
 }
