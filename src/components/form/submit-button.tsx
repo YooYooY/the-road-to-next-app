@@ -1,10 +1,10 @@
 'use client'
 
-import { LucideLoader2 } from "lucide-react";
-import { useFormStatus } from "react-dom"
-import { Button } from "../ui/button";
+import { LucideLoader2 } from 'lucide-react'
+import { useFormStatus } from 'react-dom'
+import { Button } from '../ui/button'
 
-type SubmitButtonProps= {
+type SubmitButtonProps = {
   label: string
 }
 
@@ -13,7 +13,7 @@ const SubmitButton = ({ label }: SubmitButtonProps) => {
 
   return (
     <Button disabled={pending} type="submit">
-      {pending && <LucideLoader2 className="mr-2 h-4 w-4 animate-spin" /> }
+      {pending && <LucideLoader2 className="mr-2 h-4 w-4 animate-spin" />}
       {label}
     </Button>
   )
