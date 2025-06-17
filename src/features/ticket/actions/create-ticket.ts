@@ -15,4 +15,7 @@ export const createTicket = async (formData: FormData) => {
   })
   
   revalidatePath(ticketsPath())
+  
+  formData.set("title", "")
+  formData.set("content", "")
 }
