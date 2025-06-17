@@ -9,7 +9,7 @@ type FormProps = {
 }
 
 const Form = ({ action, actionState, children }: FormProps) => {
-  useActionFeedback(actionState, {
+  const { ref } = useActionFeedback(actionState, {
     onSuccess: () => {
       if (actionState.message) {
         toast.success(actionState.message)
@@ -23,7 +23,7 @@ const Form = ({ action, actionState, children }: FormProps) => {
   })
 
   return (
-    <form action={action} className="flex flex-col gap-y-2">
+    <form ref={ref} action={action} className="flex flex-col gap-y-2">
       {children}
 
       <noscript>
