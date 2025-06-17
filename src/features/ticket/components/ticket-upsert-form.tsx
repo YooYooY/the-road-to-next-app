@@ -1,4 +1,5 @@
 import { Ticket } from '@prisma/client'
+import { SubmitButton } from '@/components/form/submit-button'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,7 +17,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
       <Input id="title" name="title" defaultValue={ticket?.title} />
       <Label htmlFor="content">Content</Label>Add commentMore actions
       <Textarea id="content" name="content" defaultValue={ticket?.content} />
-      <Button type="submit">{ticket ? 'Edit' : 'Create'}</Button>
+      <SubmitButton label={ticket ? 'Edit' : 'Create'}></SubmitButton>
     </form>
   )
 }

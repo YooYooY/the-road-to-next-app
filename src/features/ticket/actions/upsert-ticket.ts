@@ -13,7 +13,7 @@ export const upsertTicket = async (id: string | undefined, formData: FormData) =
 
   await prisma.ticket.upsert({
     where: {
-      id,
+      id: id || "",
     },
     update: data,
     create: data,
