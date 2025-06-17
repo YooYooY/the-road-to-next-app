@@ -27,7 +27,7 @@ const config: Config = {
 				}
 			},
 			animation: {
-				'fade-in-from-top': 'fade-in-from-top 0.5s ease-out'
+				'fade-in-from-top': 'fade-in-from-top 0.2s ease-in'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
