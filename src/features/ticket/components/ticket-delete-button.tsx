@@ -7,7 +7,7 @@ type TicketDeleteButtonProps = {
 }
 
 const TicketDeleteButton = ({ ticket, trigger }: TicketDeleteButtonProps) => {
-  return <form action={deleteTicket.bind(null, ticket.id)}>{trigger}</form>
+  return <form action={deleteTicket.bind(null, ticket?.id)}>{trigger}</form>
 }
 
 export { TicketDeleteButton }

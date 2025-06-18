@@ -5,7 +5,7 @@ import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 
 type SubmitButtonProps = {
-  label: string
+  label: string | React.ReactNode
 }
 
 const SubmitButton = ({ label }: SubmitButtonProps) => {
