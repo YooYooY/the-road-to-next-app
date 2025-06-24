@@ -1,7 +1,7 @@
 'use client'
 
 import { Ticket } from '@prisma/client'
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { DatePicker } from '@/components/date-picker'
 import { FieldError } from '@/components/form/field-error'
 import { Form } from '@/components/form/form'
@@ -20,8 +20,14 @@ type TicketUpsertFormProps = {
 const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
   const [actionState, action] = useActionState(upsertTicket.bind(null, ticket?.id), EMPTY_ACTION_STATE)
 
+  const [timestamp, setTimestamp] = useState(Date.now())
+
+  const handleSuccess = () => {
+    setTimestamp(Date.now())
+  }
+
   return (
-    <Form action={action} actionState={actionState}>
+    <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
       <Label htmlFor="title">Title</Label>
       <Input id="title" name="title" defaultValue={(actionState.payload?.formData.get('title') as string) || ticket?.title} />
       <FieldError name="title" actionState={actionState} />
@@ -37,7 +43,7 @@ const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
       <div className="flex gap-x-2 mb-1">
         <div className="w-1/2">
           <Label htmlFor="deadline">Deadline</Label>
-          <DatePicker id="deadline" name="deadline" defaultValue={ticket?.deadline} />
+          <DatePicker key={timestamp} id="deadline" name="deadline" defaultValue={ticket?.deadline} />
           <FieldError actionState={actionState} name="deadline" />
         </div>
         <div className="w-1/2">
