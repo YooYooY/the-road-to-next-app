@@ -1,20 +1,19 @@
 'use client'
 import { Ticket } from '@prisma/client'
-import { deleteTicket } from '../actions/delete-ticket'
+import { LucideLoader2 } from 'lucide-react'
+import { useState } from 'react'
 import {
   AlertDialog,
-  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
-import { useState } from 'react'
-import { LucideLoader2 } from 'lucide-react'
+import { deleteTicket } from '../actions/delete-ticket'
 
 type TicketDeleteButtonProps = {
   ticket: Ticket
