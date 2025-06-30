@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import { Ticket, TicketStatus } from '@prisma/client'
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu'
 import { LucideTrash2 } from 'lucide-react'
@@ -28,7 +28,13 @@ const TicketMoreMenu = ({ trigger, ticket }: TicketMoreMenuProps) => {
   )
 
   const handleUpdateTicketStatus = async (value: string) => {
-    const result = await updateTicketStatus(ticket.id, value as TicketStatus)
+    const promise = updateTicketStatus(ticket.id, value as TicketStatus)
+
+    toast.promise(promise, {
+      loading: 'Updating status...',
+    })
+
+    const result = await promise
 
     if (result.status === 'ERROR') {
       return toast.error(result.message)
