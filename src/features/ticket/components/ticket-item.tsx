@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
 import { TICKET_ICONS } from '../constants'
-import { TicketDeleteButton } from './ticket-delete-button'
+// import { TicketDeleteButton } from './ticket-delete-button'
 import { TicketMoreMenu } from './ticket-more-menu'
 
 type TicketItemProps = {
@@ -24,16 +24,16 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   )
 
-  const deleteButton = (
-    <TicketDeleteButton
-      ticket={ticket}
-      trigger={
-        <Button variant="outline" size="icon">
-          <LucideTrash className="h-4 w-4" />
-        </Button>
-      }
-    />
-  )
+  // const deleteButton = (
+  //   <TicketDeleteButton
+  //     ticket={ticket}
+  //     trigger={
+  //       <Button variant="outline" size="icon">
+  //         <LucideTrash className="h-4 w-4" />
+  //       </Button>
+  //     }
+  //   />
+  // )
 
   const editButton = (
     <Button variant="outline" size="icon" asChild>
@@ -81,7 +81,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         {isDetail ? (
           <>
             {editButton}
-            {deleteButton}
+            {/* {deleteButton} */}
             {moreMenu}
           </>
         ) : (

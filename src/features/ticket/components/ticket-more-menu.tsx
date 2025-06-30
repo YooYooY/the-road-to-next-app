@@ -1,8 +1,9 @@
 'use client'
 import { Ticket, TicketStatus } from '@prisma/client'
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu'
-import { LucideTrash2 } from 'lucide-react'
+import { LucideTrash, LucideTrash2 } from 'lucide-react'
 import { toast } from 'sonner'
+import { useConfirmDialog } from '@/components/confirm-dialog'
 import {
   DropdownMenuContent,
   DropdownMenuItem,
@@ -11,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { deleteTicket } from '../actions/delete-ticket'
 import { updateTicketStatus } from '../actions/update-ticket-status'
 import { TICKET_STATUS_LABELS } from '../constants'
 
@@ -20,12 +22,16 @@ type TicketMoreMenuProps = {
 }
 
 const TicketMoreMenu = ({ trigger, ticket }: TicketMoreMenuProps) => {
-  const deletButton = (
-    <DropdownMenuItem>
-      <LucideTrash2 className="mr-2 h-4 w-4" />
-      <span>Delete</span>
-    </DropdownMenuItem>
-  )
+  
+  const [deleteButton, deleteDialog] = useConfirmDialog({
+    action: deleteTicket.bind(null, ticket.id),
+    trigger:(
+      <DropdownMenuItem>
+        <LucideTrash className="mr-2 h-4 w-4" />
+        <span>Delete</span>
+      </DropdownMenuItem>
+    )
+  })
 
   const handleUpdateTicketStatus = async (value: string) => {
     const promise = updateTicketStatus(ticket.id, value as TicketStatus)
@@ -56,14 +62,17 @@ const TicketMoreMenu = ({ trigger, ticket }: TicketMoreMenuProps) => {
   )
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" side="right">
-        {ticketStatusRadioGroupItems}
-        <DropdownMenuSeparator />
-        {deletButton}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {deleteDialog}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" side="right">
+          {ticketStatusRadioGroupItems}
+          <DropdownMenuSeparator />
+          {deleteButton}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   )
 }
 
