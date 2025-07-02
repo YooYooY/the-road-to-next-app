@@ -17,7 +17,7 @@ export const EMPTY_ACTION_STATE: ActionState = {
   timestamp: Date.now(),
 }
 
-export const fromErrorToActionState = (error: unknown): ActionState => {
+export const fromErrorToActionState = (error: unknown, formData?: FormData): ActionState => {
   // if validation error with Zod, return first error message
   if (error instanceof ZodError) {
     return {
@@ -25,6 +25,9 @@ export const fromErrorToActionState = (error: unknown): ActionState => {
       fieldErrors: error.flatten().fieldErrors,
       timestamp: Date.now(),
       message: error.errors[0].message,
+      payload: {
+        formData: formData || new FormData(),
+      },
     }
   }
 
@@ -36,6 +39,9 @@ export const fromErrorToActionState = (error: unknown): ActionState => {
       timestamp: Date.now(),
       fieldErrors: {},
       message: error.message,
+      payload: {
+        formData: formData || new FormData(),
+      },
     }
   }
 
@@ -46,6 +52,9 @@ export const fromErrorToActionState = (error: unknown): ActionState => {
     timestamp: Date.now(),
     fieldErrors: {},
     message: 'An unknown error occurred',
+    payload: {
+      formData: formData || new FormData(),
+    },
   }
 }
 
