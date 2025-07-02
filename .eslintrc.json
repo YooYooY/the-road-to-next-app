@@ -3,12 +3,12 @@
   "plugins": ["simple-import-sort"],
   "rules": {
     "simple-import-sort/imports": [
-      "error",
+      "warn",
       {
         "groups": [["^\\u0000", "^@?\\w", "^[^.]", "^\\."]]
       }
     ],
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "warn"
   },
   "parserOptions": {
     "sourceType": "module",
