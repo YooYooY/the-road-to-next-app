@@ -1,6 +1,8 @@
-import { LucideKanban } from 'lucide-react'
+import { LogOutIcon, LucideKanban } from 'lucide-react'
 import Link from 'next/link'
+import { signOut } from '@/features/auth/actions/sign-out'
 import { homePath, signInPath, signUpPath, ticketsPath } from '@/paths'
+import { SubmitButton } from './form/submit-button'
 import { ThemeSwitcher } from './theme/theme-switcher'
 import { buttonVariants } from './ui/button'
 const Header = () => {
@@ -15,6 +17,9 @@ const Header = () => {
       <Link href={signInPath()} className={buttonVariants({ variant: 'default' })}>
         Sign In
       </Link>
+      <form action={signOut}>
+        <SubmitButton label="Sign Out" icon={<LogOutIcon />} />
+      </form>
     </>
   )
 
@@ -35,7 +40,7 @@ const Header = () => {
       </div>
       <div className="flex align-items gap-x-2">
         <ThemeSwitcher />
-       {navItems}
+        {navItems}
       </div>
     </nav>
   )

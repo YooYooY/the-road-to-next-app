@@ -6,10 +6,7 @@ type HeadingProps = {
   description?: string
 }
 
-const Heading = async ({ title, description }: HeadingProps) => {
-  const result = await getAuth()
-  console.log('auth', result)
-  
+const Heading = ({ title, description }: HeadingProps) => {
   return (
     <>
       <div className="px-8">
