@@ -1,3 +1,4 @@
+import { getAuth } from '@/features/auth/queries/get-auth'
 import { Separator } from './ui/separator'
 
 type HeadingProps = {
@@ -5,7 +6,10 @@ type HeadingProps = {
   description?: string
 }
 
-const Heading = ({ title, description }: HeadingProps) => {
+const Heading = async ({ title, description }: HeadingProps) => {
+  const result = await getAuth()
+  console.log('auth', result)
+  
   return (
     <>
       <div className="px-8">
