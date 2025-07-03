@@ -1,6 +1,18 @@
+import { hash } from '@node-rs/argon2'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
+
+const users = [
+  {
+    username: 'user1',
+    email: 'KzEoH@example.com',
+  },
+  {
+    username: 'user2',
+    email: 'q4YtM@example.com',
+  },
+]
 
 const tickets = [
   {
@@ -27,17 +39,37 @@ const tickets = [
 ]
 
 const seed = async () => {
-  const t0 = performance.now()
-  console.log('DB Seed: Started ...')
+  try {
+    const t0 = performance.now()
+    console.log('DB Seed: Started ...')
 
-  await prisma.ticket.deleteMany()
+    await prisma.ticket.deleteMany()
+    await prisma.user.deleteMany()
 
-  await prisma.ticket.createMany({
-    data: tickets,
-  })
+    const dbUsers = await Promise.all(
+      users.map(async (user) => {
+        const passwordHash = await hash('password')
+        return prisma.user.create({
+          data: {
+            ...user,
+            passwordHash,
+          },
+        })
+      })
+    )
 
-  const t1 = performance.now()
-  console.log(`DB Seed: Finished (${t1 - t0}ms)`)
+    await prisma.ticket.createMany({
+      data: tickets.map((ticket) => ({
+        ...ticket,
+        userId: dbUsers[0].id,
+      })),
+    })
+
+    const t1 = performance.now()
+    console.log(`DB Seed: Finished (${t1 - t0}ms)`)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 seed()

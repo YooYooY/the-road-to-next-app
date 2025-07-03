@@ -58,7 +58,7 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-      return toActionState('ERROR', 'Either email or username is already in use')
+      return toActionState('ERROR', 'Either email or username is already in use', formData)
     }
     return fromErrorToActionState(error, formData)
   }
