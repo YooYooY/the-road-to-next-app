@@ -43,8 +43,6 @@ export const upsertTicket = async (id: string | undefined, _formState: ActionSta
       bounty: toCent(data.bounty),
     }
 
-    console.log('dbData', dbData)
-
     await prisma.ticket.upsert({
       where: {
         id: id || '',

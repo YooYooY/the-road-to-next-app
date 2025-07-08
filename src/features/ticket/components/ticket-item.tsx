@@ -2,12 +2,13 @@ import { LucideArrowUpRightFromSquare, LucideMoreVertical, LucidePencil, LucideT
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { getAuth } from '@/features/auth/queries/get-auth'
 import { cn } from '@/lib/utils'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
+import { isOwner } from '@/utils/is-owner'
 import { TICKET_ICONS } from '../constants'
 import { TicketWithMetadata } from '../types'
-// import { TicketDeleteButton } from './ticket-delete-button'
 import { TicketMoreMenu } from './ticket-more-menu'
 
 type TicketItemProps = {
@@ -15,7 +16,11 @@ type TicketItemProps = {
   isDetail?: boolean
 }
 
-const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
+  const { user } = await getAuth()
+
+  const isTicketOwner = await isOwner(user, ticket)
+
   const detailButton = (
     <Button size="icon" variant="outline" asChild>
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -24,7 +29,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   )
 
-  const editButton = (
+  const editButton = isTicketOwner && (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketEditPath(ticket.id)}>
         <LucidePencil className="h-4 w-4" />
@@ -32,7 +37,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   )
 
-  const moreMenu = (
+  const moreMenu = isTicketOwner && (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
@@ -61,7 +66,9 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           <span className={cn('whitespace-break-spaces', { 'line-clamp-3': !isDetail })}>{ticket.content}</span>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-sm text-muted-foreground">{ticket.deadline} by {ticket.user.username}</p>
+          <p className="text-sm text-muted-foreground">
+            {ticket.deadline} by {ticket.user.username}
+          </p>
           <p className="text-sm text-muted-foreground">{toCurrencyFromCent(ticket.bounty)}</p>
         </CardFooter>
       </Card>
