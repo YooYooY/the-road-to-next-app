@@ -7,6 +7,7 @@ import { useAuth } from '@/features/auth/hooks/use-auth'
 import { homePath, signInPath, signUpPath, ticketsPath } from '@/paths'
 import { SubmitButton } from './form/submit-button'
 import { ThemeSwitcher } from './theme/theme-switcher'
+import { Badge } from './ui/badge'
 import { buttonVariants } from './ui/button'
 const Header = () => {
   const { user, isFetched } = useAuth()
@@ -18,6 +19,7 @@ const Header = () => {
       <Link href={ticketsPath()} className={buttonVariants({ variant: 'outline' })}>
         Tickets
       </Link>
+      <Badge variant="secondary">{user.username}</Badge>
       <form action={signOut}>
         <SubmitButton label="Sign Out" icon={<LogOutIcon />} />
       </form>

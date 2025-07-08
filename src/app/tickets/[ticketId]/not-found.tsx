@@ -9,7 +9,7 @@ export default function NotFound() {
       label="We could not find this ticket"
       button={
         <Button>
-          <Link href={ticketsPath()}>Go to Tickets</Link>
+          <Link href={ticketsPath()} replace>Go to Tickets</Link>
         </Button>
       }
     ></Placeholder>

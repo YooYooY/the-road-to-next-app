@@ -6,6 +6,7 @@ import z from 'zod'
 import { setCookieByKey } from '@/actions/cookies'
 import { ActionState, fromErrorToActionState, toActionState } from '@/components/form/utils/to-action-state'
 import { getAuthOrRedirect } from '@/features/auth/queries/get-auth-or-redirect'
+import { checkTicketOwner } from '@/features/auth/utils/checkTicketOwner'
 import { prisma } from '@/lib/prisma'
 import { ticketsPath } from '@/paths'
 import { toCent } from '@/utils/currency'
@@ -19,9 +20,16 @@ const upsertTicketSchema = z.object({
 
 export const upsertTicket = async (id: string | undefined, _formState: ActionState, formData: FormData) => {
   try {
-    
-    const {user} = await getAuthOrRedirect();
-    
+    if (id) {
+      const isTicketOwner = await checkTicketOwner(id)
+
+      if (!isTicketOwner) {
+        return toActionState('ERROR', 'Not authorized')
+      }
+    }
+
+    const { user } = await getAuthOrRedirect()
+
     const data = upsertTicketSchema.parse({
       title: formData.get('title'),
       content: formData.get('content'),
@@ -34,7 +42,7 @@ export const upsertTicket = async (id: string | undefined, _formState: ActionSta
       userId: user.id,
       bounty: toCent(data.bounty),
     }
-    
+
     console.log('dbData', dbData)
 
     await prisma.ticket.upsert({
