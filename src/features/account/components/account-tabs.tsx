@@ -13,7 +13,7 @@ const AccountTabs = () => {
         <TabsTrigger asChild value="profile">
           <Link href={accountProfilePath()}>Profile</Link>
         </TabsTrigger>
-        <TabsTrigger asChild value="settings">
+        <TabsTrigger asChild value="password">
           <Link href={accountPasswordPath()}>Password</Link>
         </TabsTrigger>
       </TabsList>
