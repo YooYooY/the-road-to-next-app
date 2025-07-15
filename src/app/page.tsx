@@ -9,13 +9,15 @@ type HomePageProps = {
   searchParams: SearchParams
 }
 
-const HomePage = ({ searchParams }: HomePageProps) => {
+const HomePage = async ({ searchParams }: HomePageProps) => {
   
+  const qs = await searchParamsCache.parse(searchParams)
+    
   return (
     <div className="flex-1 flex flex-col gap-y-8">
       <Heading title="All Tickets" description="Tickets by everyone at one place" />
       <Suspense fallback={<Spinner />}>
-        <TicketList searchParams={searchParamsCache.parse(searchParams)} />
+        <TicketList searchParams={qs} />
       </Suspense>
     </div>
   )
