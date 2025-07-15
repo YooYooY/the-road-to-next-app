@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { signOut } from '@/features/auth/actions/sign-out'
 import { accountPasswordPath, accountProfilePath } from '@/paths'
+import { Badge } from '@/components/ui/badge'
 
 type AccountDropdownProps = {
   user: AuthUser
@@ -26,7 +27,9 @@ const AccountDropdown = ({ user }: AccountDropdownProps) => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          My Account <Badge variant="secondary" className='float-right'>{user.username}</Badge>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={accountProfilePath()}>

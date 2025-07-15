@@ -10,7 +10,6 @@ type HomePageProps = {
 
 const HomePage = ({ searchParams }: HomePageProps) => {
   
-  console.log('searchParams', searchParams)
   return (
     <div className="flex-1 flex flex-col gap-y-8">
       <Heading title="All Tickets" description="Tickets by everyone at one place" />
