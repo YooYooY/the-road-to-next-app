@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
@@ -26,8 +26,8 @@ const SearchInput = ({ placeholder }: SearchInputProps) => {
 
     replace(`${pathname}?${params.toString()}`, { scroll: false })
   }, 250)
-  
-  return <Input placeholder={placeholder} onChange={handleSearch} />
+
+  return <Input placeholder={placeholder} onChange={handleSearch} defaultValue={searchParams.get('search') || ''} />
 }
 
 export default SearchInput
