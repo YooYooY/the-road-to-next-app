@@ -5,12 +5,11 @@ export const getTickets = async (userId: string | undefined, searchParams: Searc
   return await prisma.ticket.findMany({
     where: {
       userId,
-      title: {
-        contains: searchParams.search
-      },
+      ...(typeof searchParams.search === 'string' && { title: { contains: searchParams.search } }),
     },
     orderBy: {
-      updateAt: 'desc',
+      ...(searchParams.sort === undefined && {createAt: "desc"}),
+      ...(searchParams.sort === "bounty" && {bounty: "desc"}),
     },
     include: {
       user: {
