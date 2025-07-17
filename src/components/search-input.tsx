@@ -1,23 +1,20 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { Input } from './ui/input'
-import { useQueryState } from 'nuqs'
-import { searchParase } from '@/features/ticket/search-params'
 
 type SearchInputProps = {
+  value: string
+  onChange: (value: string) => void
   placeholder: string
 }
 
-const SearchInput = ({ placeholder }: SearchInputProps) => {
-  const [search, setSearch] = useQueryState('search', searchParase)
-
+const SearchInput = ({ value, onChange, placeholder }: SearchInputProps) => {
   const handleSearch = useDebouncedCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value)
+    onChange(event.target.value)
   }, 250)
 
-  return <Input placeholder={placeholder} onChange={handleSearch} defaultValue={search} />
+  return <Input placeholder={placeholder} onChange={handleSearch} defaultValue={value} />
 }
 
 export default SearchInput

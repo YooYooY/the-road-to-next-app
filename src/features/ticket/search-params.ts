@@ -1,6 +1,6 @@
 import { createSearchParamsCache, parseAsString } from 'nuqs/server'
 
-export const searchParase = parseAsString.withDefault('').withOptions({
+export const searchParser = parseAsString.withDefault('').withOptions({
   shallow: false,
   clearOnDefault: true,
 })
@@ -16,7 +16,7 @@ export const sortOptions = {
 }
 
 export const searchParamsCache = createSearchParamsCache({
-  search: searchParase,
+  search: searchParser,
   ...sortParser,
 })
 
