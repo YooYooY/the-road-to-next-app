@@ -7,12 +7,12 @@ export const getTickets = async (userId: string | undefined, searchParams: Parse
     title: {
       contains: searchParams.search,
     },
-  };
-    
-  const skip = searchParams.page * searchParams.size;
-  const take = searchParams.size;
+  }
 
-  return await prisma.ticket.findMany({
+  const skip = searchParams.page * searchParams.size
+  const take = searchParams.size
+
+  const tickets = await prisma.ticket.findMany({
     where,
     skip,
     take,
@@ -27,4 +27,16 @@ export const getTickets = async (userId: string | undefined, searchParams: Parse
       },
     },
   })
+
+  const count = await prisma.ticket.count({
+    where,
+  })
+  
+  return {
+    list: tickets,
+    metadata: {
+      count,
+      hasNextPage: count > skip + take,
+    },
+  }
 }
