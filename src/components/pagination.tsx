@@ -1,4 +1,5 @@
 import { Button } from './ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 
 type PageAndSize = {
   page: number
@@ -19,7 +20,6 @@ const Pagination = ({ pagination, onPagination, paginatedTicketsMetadata: { coun
   const endOffset = startOffset + pagination.size - 1
   const actualEndOffset = Math.min(endOffset, count)
 
-  // TODO:
   const label = `${startOffset}-${actualEndOffset} of ${count}`
 
   const handlePreviousPage = () => {
@@ -36,6 +36,13 @@ const Pagination = ({ pagination, onPagination, paginatedTicketsMetadata: { coun
     })
   }
 
+  const handleChangeSize = (siez: string) => {
+    onPagination({
+      page: 0,
+      size: parseInt(siez),
+    })
+  }
+
   const previousButton = (
     <Button variant="outline" size="sm" disabled={pagination.page < 1} onClick={handlePreviousPage}>
       Previous
@@ -47,11 +54,28 @@ const Pagination = ({ pagination, onPagination, paginatedTicketsMetadata: { coun
       Next
     </Button>
   )
+  
+  
+  const sizeButton = (
+    <Select onValueChange={handleChangeSize} defaultValue={pagination.size.toString()}>
+      <SelectTrigger className="h-[36px]">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="5">5</SelectItem>
+        <SelectItem value="10">10</SelectItem>
+        <SelectItem value="25">25</SelectItem>
+        <SelectItem value="50">50</SelectItem>
+        <SelectItem value="100">100</SelectItem>
+      </SelectContent>
+    </Select>
+  )
 
   return (
     <div className="flex justify-between items-center">
       <p className="text-sm text-muted-foreground">{label}</p>
       <div className="flex gap-x-2">
+        {sizeButton}
         {previousButton}
         {nextButton}
       </div>
