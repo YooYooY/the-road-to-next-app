@@ -38,6 +38,12 @@ const tickets = [
   },
 ]
 
+const comments = [
+  { content: 'First comment from DB.' },
+  { content: 'Second comment from DB.' },
+  { content: 'Third comment from DB.' },
+]
+
 const seed = async () => {
   try {
     const t0 = performance.now()
@@ -45,6 +51,7 @@ const seed = async () => {
 
     await prisma.user.deleteMany()
     await prisma.ticket.deleteMany()
+    await prisma.comment.deleteMany()
 
     const dbUsers = await Promise.all(
       users.map(async (user) => {
@@ -58,10 +65,28 @@ const seed = async () => {
       })
     )
 
-    await prisma.ticket.createMany({
-      data: tickets.map((ticket) => ({
-        ...ticket,
+    // await prisma.ticket.createMany({
+    //   data: tickets.map((ticket) => ({
+    //     ...ticket,
+    //     userId: dbUsers[0].id,
+    //   })),
+    // })
+    const dbTickets = await Promise.all(
+      tickets.map(async (ticket) => {
+        return prisma.ticket.create({
+          data: {
+            ...ticket,
+            userId: dbUsers[0].id,
+          },
+        })
+      })
+    )
+
+    await prisma.comment.createMany({
+      data: comments.map((comment) => ({
+        ...comment,
         userId: dbUsers[0].id,
+        ticketId: dbTickets[0].id,
       })),
     })
 
