@@ -1,17 +1,43 @@
+'use client'
 import { CardCompact } from '@/components/card-compact'
-import { getAuth } from '@/features/auth/queries/get-auth'
-import { isOwner } from '@/utils/is-owner'
-import { getComments } from '../queries/get-comments'
+import { CommentWithMetadata } from '../types'
 import CommentCreateForm from './comment-create-form'
 import CommentDeleteButton from './comment-delete-button'
 import CommentItem from './comment-item'
+import { Button } from '@/components/ui/button'
+import { getComments } from '../queries/get-comments'
+import { useEffect, useState } from 'react'
 
 type CommentProps = {
   ticketId: string
+  paginatedComments: {
+    list: CommentWithMetadata[]
+    metadata: {
+      hasNextPage: boolean
+      count: number
+    }
+  }
 }
 
-const Comments = async ({ ticketId }: CommentProps) => {
-  const comments = await getComments(ticketId)
+const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
+
+  const [comments, setComments] = useState(paginatedComments.list)
+  const [moreButtonText, setMoreButtonTxt] = useState('More')
+  const [hasMore, setHasMore] = useState(false)
+
+  const handleMore = async () => {
+    setMoreButtonTxt('Loading...')
+    const { list: moreComments, metadata } = await getComments(ticketId, comments.length)
+    setComments([...comments, ...moreComments])
+    setMoreButtonTxt('More')
+
+    setHasMore(comments.length < metadata.count)
+  }
+
+  useEffect(() => {
+    setComments(paginatedComments.list)
+    setHasMore(comments.length < paginatedComments.metadata.count)
+  }, [paginatedComments.list])
 
   return (
     <>
@@ -30,6 +56,14 @@ const Comments = async ({ ticketId }: CommentProps) => {
           />
         ))}
       </div>
+
+      {hasMore && (
+        <div className="flex flex-col justify-center mr-20">
+          <Button variant="ghost" onClick={handleMore}>
+            {moreButtonText}
+          </Button>
+        </div>
+      )}
     </>
   )
 }

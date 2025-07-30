@@ -17,10 +17,10 @@ import { TicketMoreMenu } from './ticket-more-menu'
 type TicketItemProps = {
   ticket: TicketWithMetadata
   isDetail?: boolean
+  comments?: React.ReactNode
 }
 
-const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
-
+const TicketItem = async ({ ticket, isDetail, comments }: TicketItemProps) => {
   const detailButton = (
     <Button size="icon" variant="outline" asChild>
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -89,7 +89,7 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
         </div>
       </div>
 
-      {isDetail ? (
+      {/* {isDetail ? (
         <Suspense
           fallback={
             <div className="flex flex-col gap-y-4">
@@ -101,7 +101,8 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
         >
           <Comments ticketId={ticket.id} />
         </Suspense>
-      ) : null}
+      ) : null} */}
+      {comments}
     </div>
   )
 }
