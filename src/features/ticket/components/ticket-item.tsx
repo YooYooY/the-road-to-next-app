@@ -20,9 +20,6 @@ type TicketItemProps = {
 }
 
 const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
-  const { user } = await getAuth()
-
-  const isTicketOwner = await isOwner(user, ticket)
 
   const detailButton = (
     <Button size="icon" variant="outline" asChild>
@@ -32,7 +29,7 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   )
 
-  const editButton = isTicketOwner && (
+  const editButton = ticket.isOwner && (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketEditPath(ticket.id)}>
         <LucidePencil className="h-4 w-4" />
@@ -40,7 +37,7 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   )
 
-  const moreMenu = isTicketOwner && (
+  const moreMenu = ticket.isOwner && (
     <TicketMoreMenu
       ticket={ticket}
       trigger={

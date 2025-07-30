@@ -1,10 +1,11 @@
+import { getAuth } from '@/features/auth/queries/get-auth'
 import { prisma } from '@/lib/prisma'
+import { isOwner } from '@/utils/is-owner'
 
 export const getTicket = async (id: string) => {
-  
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
-  
-  return await prisma.ticket.findUnique({
+  const { user } = await getAuth()
+
+  const ticket = await prisma.ticket.findUnique({
     where: {
       id,
     },
@@ -16,4 +17,11 @@ export const getTicket = async (id: string) => {
       },
     },
   })
+
+  if (!ticket) return null
+
+  return {
+    ...ticket,
+    isOwner: isOwner(user, ticket),
+  }
 }
