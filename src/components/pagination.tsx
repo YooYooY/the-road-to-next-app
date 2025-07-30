@@ -55,7 +55,6 @@ const Pagination = ({ pagination, onPagination, paginatedTicketsMetadata: { coun
     </Button>
   )
   
-  
   const sizeButton = (
     <Select onValueChange={handleChangeSize} defaultValue={pagination.size.toString()}>
       <SelectTrigger className="h-[36px]">
