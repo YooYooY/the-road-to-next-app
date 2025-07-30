@@ -1,10 +1,11 @@
-import { prisma } from "@/lib/prisma"
+import { getAuth } from '@/features/auth/queries/get-auth'
+import { prisma } from '@/lib/prisma'
+import { isOwner } from '@/utils/is-owner'
 
-export const getComments = async (ticketId: string)=>{
-  
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
-  
-  return await prisma.comment.findMany({
+export const getComments = async (ticketId: string) => {
+  const { user } = await getAuth()
+
+  const comments = await prisma.comment.findMany({
     where: {
       ticketId,
     },
@@ -16,7 +17,12 @@ export const getComments = async (ticketId: string)=>{
       },
     },
     orderBy: {
-      createAt: "desc"
-    }
+      createAt: 'desc',
+    },
   })
+
+  return comments.map((comment) => ({
+    ...comment,
+    isOwner: isOwner(user, comment),
+  }))
 }

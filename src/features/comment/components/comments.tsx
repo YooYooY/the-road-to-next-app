@@ -12,7 +12,6 @@ type CommentProps = {
 
 const Comments = async ({ ticketId }: CommentProps) => {
   const comments = await getComments(ticketId)
-  const {user} = await getAuth();
 
   return (
     <>
@@ -24,12 +23,10 @@ const Comments = async ({ ticketId }: CommentProps) => {
       />
       <div className="flex flex-col gap-y-2 mr-8">
         {comments.map((comment) => (
-          <CommentItem 
-                key={comment.id} 
-                comment={comment} 
-                buttons={[
-                  isOwner(user, comment) && <CommentDeleteButton key={comment.id} id={comment.id} />
-                ]}
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            buttons={[comment.isOwner && <CommentDeleteButton key={comment.id} id={comment.id} />]}
           />
         ))}
       </div>
@@ -38,5 +35,3 @@ const Comments = async ({ ticketId }: CommentProps) => {
 }
 
 export default Comments
-
-
