@@ -19,7 +19,6 @@ const TicketPage = async ({ params }: TicketPageProps) => {
 
   const [ticket, paginatedComments] = await Promise.all([ticketPromise, commentsPromise])
 
-
   if (!ticket) {
     notFound()
   }

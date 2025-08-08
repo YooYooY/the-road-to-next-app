@@ -10,7 +10,7 @@ export const deleteComment = async (id:string) => {
   const { user } = await getAuthOrRedirect()
   
   try {
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000))
     const comment = await prisma.comment.findUnique({
       where: {
         id,

@@ -1,15 +1,10 @@
 import { LucideArrowUpRightFromSquare, LucideMoreVertical, LucidePencil } from 'lucide-react'
 import Link from 'next/link'
-import { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { getAuth } from '@/features/auth/queries/get-auth'
-import Comments from '@/features/comment/components/comments'
 import { cn } from '@/lib/utils'
 import { ticketEditPath, ticketPath } from '@/paths'
 import { toCurrencyFromCent } from '@/utils/currency'
-import { isOwner } from '@/utils/is-owner'
 import { TICKET_ICONS } from '../constants'
 import { TicketWithMetadata } from '../types'
 import { TicketMoreMenu } from './ticket-more-menu'
@@ -88,20 +83,6 @@ const TicketItem = async ({ ticket, isDetail, comments }: TicketItemProps) => {
           )}
         </div>
       </div>
-
-      {/* {isDetail ? (
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-y-4">
-              <Skeleton className="h-[250px] w-full" />
-              <Skeleton className="h-[80px] ml-8" />
-              <Skeleton className="h-[80px] ml-8" />
-            </div>
-          }
-        >
-          <Comments ticketId={ticket.id} />
-        </Suspense>
-      ) : null} */}
       {comments}
     </div>
   )

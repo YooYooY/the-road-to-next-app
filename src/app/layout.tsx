@@ -1,11 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Header } from '@/app/_navigation/header'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import Sidebar from './_navigation/sidebar/components/sidebar'
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,7 +31,7 @@ export default function RootLayout({
                 {children}
               </main>
             </div>
-            <Toaster expand />
+            <Toaster richColors expand />
           </ThemeProvider>
         </NuqsAdapter>
       </body>

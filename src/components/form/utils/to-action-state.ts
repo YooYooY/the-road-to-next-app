@@ -1,10 +1,11 @@
-import { ZodError } from 'zod'
+import { unknown, ZodError } from 'zod'
 
-export type ActionState = {
+export type ActionState<T = any> = {
   status: 'IDLE' | 'SUCCESS' | 'ERROR'
   message: string
   fieldErrors: Record<string, string[] | undefined>
   timestamp: number
+  data?: T
   payload?: {
     formData: FormData
   }
@@ -58,13 +59,19 @@ export const fromErrorToActionState = (error: unknown, formData?: FormData): Act
   }
 }
 
-export const toActionState = (status: ActionState['status'], message: string, formData?: FormData): ActionState => {
+export const toActionState = (
+  status: ActionState['status'],
+  message: string,
+  formData?: FormData,
+  data?: unknown
+): ActionState => {
   return {
     ...EMPTY_ACTION_STATE,
     status,
     message,
     fieldErrors: {},
     timestamp: Date.now(),
+    data,
     payload: {
       formData: formData || new FormData(),
     },
