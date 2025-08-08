@@ -41,5 +41,5 @@ export const createComment = async (ticketId: string, _actionState: ActionState,
   
   revalidatePath(ticketPath(ticketId))
   
-  return toActionState('SUCCESS', 'Comment created successfully', formData, comment);
+  return toActionState('SUCCESS', 'Comment created successfully', formData, { ...comment, isOwner: true })
 }
