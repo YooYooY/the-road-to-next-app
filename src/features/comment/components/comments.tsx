@@ -39,10 +39,10 @@ const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
     setComments((prevComments) => [comment, ...prevComments])
   }
 
-  useEffect(() => {
-    setComments(paginatedComments.list)
-    setMetadata(paginatedComments.metadata)
-  }, [paginatedComments])
+  // useEffect(() => {
+  //   setComments(paginatedComments.list)
+  //   setMetadata(paginatedComments.metadata)
+  // }, [paginatedComments])
 
   return (
     <>
