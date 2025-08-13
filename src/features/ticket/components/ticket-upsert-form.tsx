@@ -20,14 +20,12 @@ type TicketUpsertFormProps = {
 const TicketUpsertForm = ({ ticket }: TicketUpsertFormProps) => {
   const [actionState, action] = useActionState(upsertTicket.bind(null, ticket?.id), EMPTY_ACTION_STATE)
 
-  const [timestamp, setTimestamp] = useState(Date.now())
 
   const datePickerImperativeHandleRef = useRef<{
     reset: () => void
   }>(null)
 
   const handleSuccess = () => {
-    // setTimestamp(Date.now())
     datePickerImperativeHandleRef.current?.reset()
   }
 

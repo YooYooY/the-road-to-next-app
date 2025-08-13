@@ -14,7 +14,7 @@ type CommentProps = {
     list: CommentWithMetadata[]
     metadata: {
       hasNextPage: boolean
-      count: number
+      cursor?: number
     }
   }
 }
@@ -24,9 +24,9 @@ const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
   const [metadata, setMetadata] = useState(paginatedComments.metadata)
 
   const handleMore = async () => {
-    const { list: moreComments, metadata } = await getComments(ticketId, comments.length)
+    const { list: moreComments, metadata: newMetadata } = await getComments(ticketId, metadata.cursor)
     setComments([...comments, ...moreComments])
-    setMetadata(metadata)
+    setMetadata(newMetadata)
   }
 
   const onDeleteComment = (id: string) => {
