@@ -14,7 +14,7 @@ type CommentProps = {
     list: CommentWithMetadata[]
     metadata: {
       hasNextPage: boolean
-      cursor?: number
+      cursor?: string
     }
   }
 }
