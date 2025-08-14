@@ -1,3 +1,4 @@
+import { PaginateData } from '@/types/pagination'
 import { Button } from './ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 
@@ -9,10 +10,7 @@ type PageAndSize = {
 type PaginationProps = {
   pagination: PageAndSize
   onPagination: (pageAndSize: PageAndSize) => void
-  paginatedTicketsMetadata: {
-    count: number
-    hasNextPage: boolean
-  }
+  paginatedTicketsMetadata: PaginateData<unknown>["metadata"]
 }
 
 const Pagination = ({ pagination, onPagination, paginatedTicketsMetadata: { count, hasNextPage } }: PaginationProps) => {

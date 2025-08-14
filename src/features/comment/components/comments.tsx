@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { CardCompact } from '@/components/card-compact'
 import { Button } from '@/components/ui/button'
+import { PaginateData } from '@/types/pagination'
 import { getComments } from '../queries/get-comments'
 import { CommentWithMetadata } from '../types'
 import CommentCreateForm from './comment-create-form'
@@ -10,13 +11,7 @@ import CommentItem from './comment-item'
 
 type CommentProps = {
   ticketId: string
-  paginatedComments: {
-    list: CommentWithMetadata[]
-    metadata: {
-      hasNextPage: boolean
-      cursor?: string
-    }
-  }
+  paginatedComments: PaginateData<CommentWithMetadata>
 }
 
 const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
