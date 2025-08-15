@@ -4,6 +4,9 @@ import { prisma } from '@/lib/prisma'
 import { isOwner } from '@/utils/is-owner'
 
 export const getComments = async (ticketId: string, cursor?: string) => {
+  
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  
   const { user } = await getAuth()
   const where = {
     ticketId,
@@ -11,7 +14,7 @@ export const getComments = async (ticketId: string, cursor?: string) => {
       lt: cursor,
     },
   }
-  const take = 3
+  const take = 2
 
   let [comments, count] = await prisma.$transaction([
     prisma.comment.findMany({
@@ -40,7 +43,7 @@ export const getComments = async (ticketId: string, cursor?: string) => {
 
   const hasNextPage = comments.length > take;
   comments = hasNextPage ? comments.slice(0, -1) : comments
-
+  
   return {
     list: comments.map((comment) => ({
       ...comment,

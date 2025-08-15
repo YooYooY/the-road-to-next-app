@@ -1,7 +1,9 @@
 'use client'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react';
+import { useInView } from "react-intersection-observer";
 import { CardCompact } from '@/components/card-compact'
-import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton';
 import { PaginateData } from '@/types/pagination'
 import { getComments } from '../queries/get-comments'
 import { CommentWithMetadata } from '../types'
@@ -18,7 +20,7 @@ const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
   // const [comments, setComments] = useState(paginatedComments.list)
   // const [metadata, setMetadata] = useState(paginatedComments.metadata)
   const queryKey = [ 'comments', ticketId ];
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam }) => getComments(ticketId, pageParam),
     initialPageParam: undefined as string | undefined,
@@ -58,7 +60,18 @@ const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
   }
   const handleCreateComment = (comment: CommentWithMetadata | undefined) => {
     queryClient.invalidateQueries({ queryKey })
+    // refetch()
   }
+
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }, [ inView, fetchNextPage, hasNextPage, isFetchingNextPage ])
+
 
   return (
     <>
@@ -80,13 +93,29 @@ const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
         ))}
       </div>
 
-      {hasNextPage && (
-        <div className="flex flex-col justify-center mr-20">
-          <Button variant="ghost" onClick={handleMore}>
-            More
-          </Button>
-        </div>
-      )}
+      {
+        isFetchingNextPage && (
+          <>
+            <div className='flex gap-x-2'>
+              <Skeleton className='h-[82px] w-full' />
+              <Skeleton className='h-[40px] w-[40px]' />
+            </div>
+            <div className='flex gap-x-2'>
+              <Skeleton className='h-[82px] w-full' />
+              <Skeleton className='h-[40px] w-[40px]' />
+            </div>
+          </>
+        )
+      }
+
+      <div ref={ref}>
+        {
+          !hasNextPage && (
+            <p className='text-right text-xs italic text-foreground'>No more comments.</p>
+          )
+        }
+      </div>
+
     </>
   )
 }
