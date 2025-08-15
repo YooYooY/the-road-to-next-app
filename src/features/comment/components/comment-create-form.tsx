@@ -20,13 +20,12 @@ const CommentCreateForm = ({ ticketId, onCreateComment }: CommentCreateFormProps
   const handleSuccess = (actionState: ActionState<CommentWithMetadata>) => {
     onCreateComment?.(actionState.data)
   }
-  
+    
   return (
     <Form action={action} actionState={actionState} onSuccess={handleSuccess}>
       <Textarea
         name="content"
         placeholder="What's on your mind..."
-        defaultValue={(actionState.payload?.formData.get('content') as string) || ''}
       />
       <FieldError name="content" actionState={actionState} />
       <SubmitButton label="Comment" />
