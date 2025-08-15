@@ -22,6 +22,15 @@ const Comments = ({ ticketId, paginatedComments }: CommentProps) => {
     queryKey: ['comments', ticketId],
     queryFn: ({ pageParam }) => getComments(ticketId, pageParam),
     initialPageParam: undefined as string | undefined,
+    initialData: {
+      pages: [
+        {
+          list: paginatedComments.list,
+          metadata: paginatedComments.metadata,
+        },
+      ],
+      pageParams: []
+    },
     getNextPageParam: (lastPage) => (lastPage.metadata.hasNextPage ? lastPage.metadata.cursor : undefined),
   })
 
