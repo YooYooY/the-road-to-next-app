@@ -16,6 +16,8 @@
     "prisma-migrate": "npx prisma migrate deploy"
   },
   "dependencies": {
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -47,7 +49,6 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
-    "@lucia-auth/adapter-prisma": "^4.0.1",
     "@node-rs/argon2": "^1.8.3",
     "@types/big.js": "^6.2.2",
     "@types/node": "^20",
@@ -56,7 +57,6 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "eslint-plugin-simple-import-sort": "^12.1.0",
-    "lucia": "^3.2.0",
     "postcss": "^8",
     "prisma": "^5.13.0",
     "tailwindcss": "^3.4.1",
